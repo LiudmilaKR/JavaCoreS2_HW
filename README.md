@@ -1,0 +1,3 @@
+# JavaCoreS2_HW
+JavaCoreSeminar2_Homework
+Многомерные крестики-нолики

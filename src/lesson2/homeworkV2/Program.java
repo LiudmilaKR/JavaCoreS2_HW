@@ -140,26 +140,69 @@ public class Program {
         int win = WIN_COUNT % 2 == 0 ? WIN_COUNT / 2 : WIN_COUNT / 2 + 1;
         for (int i = 0; i < fieldSizeX; i++) {
             for (int j = 0; j < fieldSizeY; j++) {
-                if (check1(i, j, DOT_HUMAN, win)) {
-                    if (isCellValid(i, j - 1) && isCellEmpty(i, j - 1)) {
+                if (check1(i, j, DOT_HUMAN, win)) { // по горизонтали вправо
+                    if (isCellValid(i, j - 1) && isCellEmpty(i, j - 1) &&
+                            (isCellValid(i, j + 2) && field[i][j + 2] != DOT_AI)) {
                         x = i;
                         y = j - 1;
+                        break;
                     } else {
-                        do { j++; } while (isCellValid(i, j) && !isCellEmpty(i, j));
-                        if (isCellValid(i, j) && isCellEmpty(i, j) && field[i][j - 1] != DOT_AI) {
+                        int k = j;
+                        do { k++; } while (isCellValid(i, k) && !isCellEmpty(i, k));
+                        if (isCellValid(i, k) && isCellEmpty(i, k) && field[i][k - 1] != DOT_AI) {
                             x = i;
-                            y = j;
+                            y = k;
+                            break;
                         }
                     }
                 }
-                if (check2(i, j, DOT_HUMAN, win)) {
-
+                if (check2(i, j, DOT_HUMAN, win)) { // по вертикали вниз
+                    if (isCellValid(i - 1, j) && isCellEmpty(i - 1, j) &&
+                            (isCellValid(i + 2, j) && field[i + 2][j] != DOT_AI)) {
+                        x = i - 1;
+                        y = j;
+                        break;
+                    } else {
+                        int k = i;
+                        do { k++; } while (isCellValid(k, j) && !isCellEmpty(k, j));
+                        if (isCellValid(k, j) && isCellEmpty(k, j) && field[k - 1][j] != DOT_AI) {
+                            x = k;
+                            y = j;
+                            break;
+                        }
+                    }
                 }
-                if (check3(i, j, DOT_HUMAN, win)) {
-
+                if (check3(i, j, DOT_HUMAN, win)) { // по диагонали вправо вниз
+                    if (isCellValid(i - 1, j - 1) && isCellEmpty(i - 1, j - 1) &&
+                            (isCellValid(i + 2, j + 2) && field[i + 2][j + 2] != DOT_AI)) {
+                        x = i - 1;
+                        y = j - 1;
+                        break;
+                    } else {
+                        int k = i;
+                        do { k++; } while (isCellValid(k, k) && !isCellEmpty(k, k));
+                        if (isCellValid(k, k) && isCellEmpty(k, k) && field[k - 1][k - 1] != DOT_AI) {
+                            x = k;
+                            y = k;
+                            break;
+                        }
+                    }
                 }
-                if (check4(i, j, DOT_HUMAN, win)) {
-
+                if (check4(i, j, DOT_HUMAN, win)) { // по диагонали вправо вверх
+                    if (isCellValid(i - 1, j + 1) && isCellEmpty(i - 1, j + 1) &&
+                            (isCellValid(i + 2, j - 2) && field[i + 2][j - 2] != DOT_AI)) {
+                        x = i - 1;
+                        y = j + 1;
+                        break;
+                    } else {
+                        int k = i;
+                        do { k++; } while (isCellValid(k - 1, k + 1) && !isCellEmpty(k - 1, k + 1));
+                        if (isCellValid(k - 1, k + 1) && isCellEmpty(k - 1, k + 1) && field[k + 2][k - 2] != DOT_AI) {
+                            x = k;
+                            y = k;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -187,7 +230,7 @@ public class Program {
         return false;
     }
     /**
-     * Проверка win штук подряд фишек по горизонтали x вправо
+     * Проверка win штук подряд фишек по горизонтали y вправо
      * @param x номер строки
      * @param y номер столбца
      * @param c фишка игрока
@@ -204,7 +247,7 @@ public class Program {
         return (col == win);
     }
     /**
-     * Проверка win штук подряд фишек по вертикали y вниз
+     * Проверка win штук подряд фишек по вертикали x вниз
      * @param x номер строки
      * @param y номер столбца
      * @param c фишка игрока
